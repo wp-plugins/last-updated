@@ -3,7 +3,7 @@
  * Plugin Name: last updated
  * Plugin URI: http://www.martin.wudenka.de/wordpress-widget-zuletzt-aktualisierte-posts-anzeigen/
  * Description: Shows posts and pages last updated.
- * Version: 1.3
+ * Version: 1.4
  * Author: Martin Wudenka
  * Author URI: http://www.martin.wudenka.de
  * License: CC-BY-SA 3.0
@@ -13,7 +13,7 @@
  /*
  * sources: 
  * http://www.galuba.net/programmierung/wordpress/tipps-tricks/wordpress-zuletzt-aktualisierte-artikel-seiten-anzeigen.html
- * http://talkpress.de/artikel/wordpress-widget-programmieren
+ * http://justintadlock.com/archives/2009/05/26/the-complete-guide-to-creating-widgets-in-wordpress-28
  */
  
 /**
@@ -31,7 +31,7 @@ add_action( 'widgets_init', 'mw_load_lastupdated' );
  * Register our widget.
  */
 function mw_load_lastupdated() {
-        register_widget( 'mw_lastupdated' );
+	register_widget( 'mw_lastupdated' );
 }
 
 /**
@@ -41,108 +41,121 @@ function mw_load_lastupdated() {
  */
 class mw_lastupdated extends WP_Widget {
 
-        /**
-         * Widget setup.
-         */
-        function mw_lastupdated() {
-                /* Widget settings. */
-                $widget_ops = array( 'classname' => 'lastupdated', 'description' => __('Shows posts and pages last updated.', 'lastupdated') );
+	/**
+	 * Widget setup.
+	 */
+	function mw_lastupdated() {
+   	/* Widget settings. */
+     	$widget_ops = array( 'classname' => 'lastupdated', 'description' => __('Shows posts and pages last updated.', 'lastupdated') );
 
-                /* Widget control settings. */
-                $control_ops = array( 'id_base' => 'lastupdated-widget' );
+   	/* Widget control settings. */
+    	$control_ops = array( 'id_base' => 'lastupdated-widget' );
 
-                /* Create the widget. */
-                $this->WP_Widget( 'lastupdated-widget', __('last updated', 'lastupdated'), $widget_ops, $control_ops );
-        }
+    	/* Create the widget. */
+   	$this->WP_Widget( 'lastupdated-widget', __('last updated', 'lastupdated'), $widget_ops, $control_ops );
+	}
 
-        /**
-         * How to display the widget on the screen.
-         */
-        function widget( $args, $instance )
-                  {
-                  global $wpdb;
-                  extract( $args );
+	/**
+	 * How to display the widget on the screen.
+	 */
+	function widget( $args, $instance ) {
+		global $wpdb;
+    	extract( $args );
 
-                  /* Our variables from the widget settings. */
-                  $title = apply_filters('widget_title', $instance['title'] );
-                  $number = apply_filters('widget_number', $instance['number'] );
-                  $date_bool = $instance['date'];
-                  if (empty($number))
-                           $number = 5;        
+    	/* Our variables from the widget settings. */
+     	$title = apply_filters('widget_title', $instance['title'] );
+     	$amount = apply_filters('widget_amount', $instance['amount'] );
+    	$date_bool = $instance['date'];
+    	$post_type = $instance['post_type'];
+     	if (empty($amount))
+     		$amount = 5;
+     		
+     	switch($post_type) {
+     		case 'posts': $post_type_string="post_type = 'post'";	break;
+     		case 'pages': $post_type_string="post_type = 'page'";	break;
+     		case 'both': $post_type_string="(post_type = 'post' OR post_type = 'page')";	break;
+     		default: $post_type_string="(post_type = 'post' OR post_type = 'page')";
+     	}
+     		        
                 
-                  $recentposts = $wpdb->get_results("SELECT ID, post_title, post_modified FROM $wpdb->posts WHERE post_status = 'publish' AND (post_type = 'post' OR post_type = 'page') AND post_modified_gmt < '".current_time('mysql', 1)."' ORDER BY post_modified_gmt DESC LIMIT ".$number );
+    	$recentposts = $wpdb->get_results("SELECT ID, post_title, post_modified FROM $wpdb->posts WHERE post_status = 'publish' AND " . $post_type_string . " AND post_modified_gmt < '".current_time('mysql', 1)."' ORDER BY post_modified_gmt DESC LIMIT ".$amount );
                   
-                  if ($recentposts) 
-                           {
-                           /* Before widget (defined by themes). */
-                           echo $before_widget;
+      if ($recentposts) {
+      	/* Before widget (defined by themes). */
+        	echo $before_widget;
 
-                           /* Display the widget title if one was input (before and after defined by themes). */
-                           if ( $title )
-                                    echo $before_title . $title . $after_title;
+        	/* Display the widget title if one was input (before and after defined by themes). */
+       	if ( $title )
+         	echo $before_title . $title . $after_title;
 
-									echo '<ul>';                           
+			echo '<ul>';                          
                                     
-                           if($date_bool) {                       	
-                           	foreach($recentposts as $recentpost) {
-                              	echo '<li><a href="'.get_permalink($recentpost->ID).'">'.$recentpost->post_title.'</a> ('.date(get_option('date_format'),strtotime($recentpost->post_modified)).') </li>';
-                              }                          
-                				}
-                				else {
-                					foreach($recentposts as $recentpost) {
-                              	echo '<li><a href="'.get_permalink($recentpost->ID).'">'.$recentpost->post_title.'</a></li>';
-                            	}	
-                				}
+       	if($date_bool) {                       	
+         	foreach($recentposts as $recentpost) {
+            	echo '<li><a href="'.get_permalink($recentpost->ID).'">'.$recentpost->post_title.'</a> ('.date(get_option('date_format'),strtotime($recentpost->post_modified)).') </li>';
+         	}                          
+       	}
+        	else {
+         	foreach($recentposts as $recentpost) {
+             	echo '<li><a href="'.get_permalink($recentpost->ID).'">'.$recentpost->post_title.'</a></li>';
+            }	
+   		}
                            
-									echo '</ul>';
+			echo '</ul>';
 
-                           /* After widget (defined by themes). */
-                           echo $after_widget;
-                           }
-                  }
+       	/* After widget (defined by themes). */
+       	echo $after_widget;
+      	}
+	}
 
-        /**
-         * Update the widget settings.
-         */
-        function update( $new_instance, $old_instance ) {
-                $instance = $old_instance;
+	/**
+	 * Update the widget settings.
+	 */
+	function update( $new_instance, $old_instance ) {
+		$instance = $old_instance;
 
-                /* Strip tags for title and name to remove HTML (important for text inputs). */
-                $instance['title'] = strip_tags( $new_instance['title'] );
-                $instance['number'] = strip_tags( $new_instance['number'] );
-                $instance['date'] = (bool) $new_instance['date'];
+		/* Strip tags for title and name to remove HTML (important for text inputs). */
+    	$instance['title'] = strip_tags( $new_instance['title'] );
+    	$instance['amount'] = strip_tags( $new_instance['amount'] );
+    	$instance['date'] = (bool) $new_instance['date'];
+    	$instance['post_type'] = $new_instance['post_type'];
 
-                return $instance;
-        }
+   	return $instance;
+	}
 
-        /**
-         * Displays the widget settings controls on the widget panel.
-         * Make use of the get_field_id() and get_field_name() function
-         * when creating your form elements. This handles the confusing stuff.
-         */
-        function form( $instance ) {
+	/**
+	 * Displays the widget settings controls on the widget panel.
+	 * Make use of the get_field_id() and get_field_name() function
+	 * when creating your form elements. This handles the confusing stuff.
+	 */
+	function form( $instance ) {
 
-                /* Set up some default widget settings. */
-                $defaults = array( 'title' => __('last updated','lastupdated'), 'number' => 5 );
-                $instance = wp_parse_args( (array) $instance, $defaults ); ?>
+	/* Set up some default widget settings. */
+	$defaults = array( 'title' => __('last updated','lastupdated'), 'amount' => 5, 'post_type' => 'posts', 'date' => true );
+	$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 
-                <!-- Widget Title: Text Input -->
-                <p>
-                        <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('title:','lastupdated'); ?></label>
-                        <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
-                </p>
-                <p>
-                        <label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e('number (if empty, number will be 5):','lastupdated'); ?></label>
-                        <input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" value="<?php echo $instance['number']; ?>" style="width:100%;" />
-                </p>
-                
-                <p>
-							<input id="<?php echo $this->get_field_id('date'); ?>" name="<?php echo $this->get_field_name('date'); ?>" type="checkbox" <?php checked(isset($instance['date']) ? $instance['date'] : 0); ?> /> 
-							<label for="<?php echo $this->get_field_id( 'date' ); ?>"><?php _e('Should the date be showen?','lastupdated'); ?></label>
-					</p>
+	<p>
+   	<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('title:','lastupdated'); ?></label>
+    	<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+   </p>
+	<p>
+    	<label for="<?php echo $this->get_field_id( 'amount' ); ?>"><?php _e('amount (if empty, amount will be 5):','lastupdated'); ?></label>
+ 		<input id="<?php echo $this->get_field_id( 'amount' ); ?>" name="<?php echo $this->get_field_name( 'amount' ); ?>" value="<?php echo $instance['amount']; ?>" style="width:100%;" />
+	</p>
+	<p>
+		<label for="<?php echo $this->get_field_id( 'post_type' ); ?>"><?php _e('post-type:','lastupdated'); ?></label> 
+		<select id="<?php echo $this->get_field_id( 'post_type' ); ?>" name="<?php echo $this->get_field_name( 'post_type' ); ?>" class="widefat" style="width:100%;">
+			<option <?php if ( 'posts' == $instance['post_type'] ) echo 'selected="selected"'; ?>><?php _e('posts','lastupdated'); ?></option>
+			<option <?php if ( 'pages' == $instance['post_type'] ) echo 'selected="selected"'; ?>><?php _e('pages','lastupdated'); ?></option>
+			<option <?php if ( 'both' == $instance['post_type'] ) echo 'selected="selected"'; ?>><?php _e('both','lastupdated'); ?></option>
+		</select>
+	</p>
+	<p>
+		<input id="<?php echo $this->get_field_id('date'); ?>" name="<?php echo $this->get_field_name('date'); ?>" type="checkbox" <?php checked(isset($instance['date']) ? $instance['date'] : 0); ?> /> 
+		<label for="<?php echo $this->get_field_id( 'date' ); ?>"><?php _e('Should the date be showen?','lastupdated'); ?></label>
+	</p>
 
-        <?php
-        }
+<?php
+	}
 }
-
 ?>
