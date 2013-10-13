@@ -22,7 +22,7 @@ Optional it can display the date when the post or pages was updated.
 
 DE:
 
-Dieses Plugin stellt ein Widget zur Verfügung, das zultzt aktualisierte Beiträge und Seiten anzeigt.
+Dieses Plugin stellt ein Widget zur Verfügung, das zuletzt aktualisierte Beiträge und Seiten anzeigt.
 
 Einstellungen:
 Man kann einen Titel, die Anzahl der aufgelisteten Seiten oder Beiträge festlegen und hat die Möglichkeit optional ein Datum anzuzeigen.
