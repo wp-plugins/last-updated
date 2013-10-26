@@ -3,7 +3,7 @@ Contributors: wudi96
 Tags: widget
 Requires at least: 3.0.1
 Tested up to: 3.6
-Stable tag: 1.4
+Stable tag: 1.4.1
 License: CC-BY-SA 3.0
 License URI: http://creativecommons.org/licenses/by-sa/3.0
 
@@ -18,6 +18,7 @@ This plugin provides a widget that shows last updated posts or pages.
 Settings:
 You can set your own title.
 You can change the number of displayed posts or pages. Standard is 5.
+You can choose between posts, pages or both.
 Optional it can display the date when the post or pages was updated.
 
 DE:
@@ -26,6 +27,7 @@ Dieses Plugin stellt ein Widget zur Verfügung, das zuletzt aktualisierte Beitr�
 
 Einstellungen:
 Man kann einen Titel, die Anzahl der aufgelisteten Seiten oder Beiträge festlegen und hat die Möglichkeit optional ein Datum anzuzeigen.
+Außerdem kann man zwischen Beiträgen, Seiten oder beides wählen.
 
 == Installation ==
 

@@ -1,47 +1,45 @@
 <?php
-/**
+/*
  * Plugin Name: last updated
  * Plugin URI: http://www.martin.wudenka.de/wordpress-widget-zuletzt-aktualisierte-posts-anzeigen/
  * Description: Shows posts and pages last updated.
- * Version: 1.4
+ * Version: 1.4.1
  * Author: Martin Wudenka
  * Author URI: http://www.martin.wudenka.de
- * License: CC-BY-SA 3.0
- * License URI: http://creativecommons.org/licenses/by-sa/3.0
  */
  
- /*
+/*
  * sources: 
  * http://www.galuba.net/programmierung/wordpress/tipps-tricks/wordpress-zuletzt-aktualisierte-artikel-seiten-anzeigen.html
  * http://justintadlock.com/archives/2009/05/26/the-complete-guide-to-creating-widgets-in-wordpress-28
  */
  
-/**
+/*
  * Translation
  */ 
 load_plugin_textdomain( 'lastupdated', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 
-/**
+/*
  * Add function to widgets_init that'll load our widget.
  */
 add_action( 'widgets_init', 'mw_load_lastupdated' );
 
-/**
+/*
  * Register our widget.
  */
 function mw_load_lastupdated() {
 	register_widget( 'mw_lastupdated' );
 }
 
-/**
+/*
  * Example Widget class.
  * This class handles everything that needs to be handled with the widget:
  * the settings, form, display, and update.  Nice!
  */
 class mw_lastupdated extends WP_Widget {
 
-	/**
+	/*
 	 * Widget setup.
 	 */
 	function mw_lastupdated() {
@@ -55,7 +53,7 @@ class mw_lastupdated extends WP_Widget {
    	$this->WP_Widget( 'lastupdated-widget', __('last updated', 'lastupdated'), $widget_ops, $control_ops );
 	}
 
-	/**
+	/*
 	 * How to display the widget on the screen.
 	 */
 	function widget( $args, $instance ) {
@@ -108,7 +106,7 @@ class mw_lastupdated extends WP_Widget {
       	}
 	}
 
-	/**
+	/*
 	 * Update the widget settings.
 	 */
 	function update( $new_instance, $old_instance ) {
@@ -123,7 +121,7 @@ class mw_lastupdated extends WP_Widget {
    	return $instance;
 	}
 
-	/**
+	/*
 	 * Displays the widget settings controls on the widget panel.
 	 * Make use of the get_field_id() and get_field_name() function
 	 * when creating your form elements. This handles the confusing stuff.
@@ -136,11 +134,11 @@ class mw_lastupdated extends WP_Widget {
 
 	<p>
    	<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('title:','lastupdated'); ?></label>
-    	<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+    	<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>"  class="widefat" />
    </p>
 	<p>
     	<label for="<?php echo $this->get_field_id( 'amount' ); ?>"><?php _e('amount (if empty, amount will be 5):','lastupdated'); ?></label>
- 		<input id="<?php echo $this->get_field_id( 'amount' ); ?>" name="<?php echo $this->get_field_name( 'amount' ); ?>" value="<?php echo $instance['amount']; ?>" style="width:100%;" />
+ 		<input type="text" id="<?php echo $this->get_field_id( 'amount' ); ?>" name="<?php echo $this->get_field_name( 'amount' ); ?>" value="<?php echo $instance['amount']; ?>"  class="widefat" />
 	</p>
 	<p>
 		<label for="<?php echo $this->get_field_id( 'post_type' ); ?>"><?php _e('post-type:','lastupdated'); ?></label> 
