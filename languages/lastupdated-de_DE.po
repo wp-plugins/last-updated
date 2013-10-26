@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: last updated v1.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-10-13 12:51+0100\n"
-"PO-Revision-Date: 2013-10-13 12:52+0100\n"
+"PO-Revision-Date: 2013-10-13 13:28+0100\n"
 "Last-Translator: martinwudenka <Martin.Wudenka@gmx.de>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -36,7 +36,7 @@ msgstr "Titel:"
 # @ lastupdated
 #: lastupdated.php:137
 msgid "amount (if empty, amount will be 5):"
-msgstr "Anzahl (wenn leer, dann werden 5 angezeigt)"
+msgstr "Anzahl (wenn leer, werden 5 angezeigt)"
 
 #: lastupdated.php:141
 msgid "post-type:"
