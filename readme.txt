@@ -2,7 +2,7 @@
 Contributors: wudi96
 Tags: widget
 Requires at least: 3.0.1
-Tested up to: 3.6
+Tested up to: 3.8
 Stable tag: 1.4.1
 License: CC-BY-SA 3.0
 License URI: http://creativecommons.org/licenses/by-sa/3.0
