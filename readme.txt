@@ -2,8 +2,8 @@
 Contributors: wudi96
 Tags: widget
 Requires at least: 3.0.1
-Tested up to: 3.6
-Stable tag: 1.4.1
+Tested up to: 3.8
+Stable tag: 1.4.2
 License: CC-BY-SA 3.0
 License URI: http://creativecommons.org/licenses/by-sa/3.0
 
@@ -56,6 +56,9 @@ General->Date Format.
 
 == Changelog ==
 
+= 1.4.2 =
+Some Design fixes
+
 = 1.4 =
 Choose now between 'posts', 'pages' or 'both'.
 
@@ -65,7 +68,7 @@ Internationalisation
 == Upgrade Notice ==
 
 = 1.4 =
-more comfortable
+more comfortable :D
 
 = 1.3 =
 For English and German People.
