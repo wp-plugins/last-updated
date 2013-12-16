@@ -134,22 +134,22 @@ class mw_lastupdated extends WP_Widget {
 
 	<p>
    	<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('title:','lastupdated'); ?></label>
-    	<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>"  class="widefat" />
+    	<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>"  class="widefat" >
    </p>
 	<p>
     	<label for="<?php echo $this->get_field_id( 'amount' ); ?>"><?php _e('amount (if empty, amount will be 5):','lastupdated'); ?></label>
- 		<input type="text" id="<?php echo $this->get_field_id( 'amount' ); ?>" name="<?php echo $this->get_field_name( 'amount' ); ?>" value="<?php echo $instance['amount']; ?>"  class="widefat" />
+ 		<input type="text" id="<?php echo $this->get_field_id( 'amount' ); ?>" name="<?php echo $this->get_field_name( 'amount' ); ?>" value="<?php echo $instance['amount']; ?>"  class="widefat" >
 	</p>
 	<p>
 		<label for="<?php echo $this->get_field_id( 'post_type' ); ?>"><?php _e('post-type:','lastupdated'); ?></label> 
-		<select id="<?php echo $this->get_field_id( 'post_type' ); ?>" name="<?php echo $this->get_field_name( 'post_type' ); ?>" class="widefat" style="width:100%;">
+		<select id="<?php echo $this->get_field_id( 'post_type' ); ?>" name="<?php echo $this->get_field_name( 'post_type' ); ?>" class="widefat">
 			<option <?php if ( 'posts' == $instance['post_type'] ) echo 'selected="selected"'; ?>><?php _e('posts','lastupdated'); ?></option>
 			<option <?php if ( 'pages' == $instance['post_type'] ) echo 'selected="selected"'; ?>><?php _e('pages','lastupdated'); ?></option>
 			<option <?php if ( 'both' == $instance['post_type'] ) echo 'selected="selected"'; ?>><?php _e('both','lastupdated'); ?></option>
 		</select>
 	</p>
 	<p>
-		<input id="<?php echo $this->get_field_id('date'); ?>" name="<?php echo $this->get_field_name('date'); ?>" type="checkbox" <?php checked(isset($instance['date']) ? $instance['date'] : 0); ?> /> 
+		<input class="checkbox" id="<?php echo $this->get_field_id('date'); ?>" name="<?php echo $this->get_field_name('date'); ?>" type="checkbox" <?php checked(isset($instance['date']) ? $instance['date'] : 0); ?> > 
 		<label for="<?php echo $this->get_field_id( 'date' ); ?>"><?php _e('Should the date be showen?','lastupdated'); ?></label>
 	</p>
 
