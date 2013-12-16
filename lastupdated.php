@@ -3,7 +3,7 @@
  * Plugin Name: last updated
  * Plugin URI: http://www.martin.wudenka.de/wordpress-widget-zuletzt-aktualisierte-posts-anzeigen/
  * Description: Shows posts and pages last updated.
- * Version: 1.4.1
+ * Version: 1.4.2
  * Author: Martin Wudenka
  * Author URI: http://www.martin.wudenka.de
  */
