@@ -3,7 +3,7 @@
  * Plugin Name: last updated
  * Plugin URI: http://www.martin.wudenka.de/wordpress-widget-zuletzt-aktualisierte-posts-anzeigen/
  * Description: Shows posts and pages last updated.
- * Version: 1.4.2
+ * Version: 1.5
  * Author: Martin Wudenka
  * Author URI: http://www.martin.wudenka.de
  */
@@ -74,10 +74,26 @@ class mw_lastupdated extends WP_Widget {
      		case 'both': $post_type_string="(post_type = 'post' OR post_type = 'page')";	break;
      		default: $post_type_string="(post_type = 'post' OR post_type = 'page')";
      	}
-     		        
-                
-    	$recentposts = $wpdb->get_results("SELECT ID, post_title, post_modified FROM $wpdb->posts WHERE post_status = 'publish' AND " . $post_type_string . " AND post_modified_gmt < '".current_time('mysql', 1)."' ORDER BY post_modified_gmt DESC LIMIT ".$amount );
-                  
+     	
+    	$sql_create_date = "SELECT ID,post_title,post_modified FROM " . $wpdb->posts . " WHERE post_status = 'publish' AND " . $post_type_string . " AND post_modified_gmt < '" . current_time('mysql', 1) . "' ORDER BY post_date_gmt";
+    	$sql_update_date = "SELECT ID,post_title,post_modified FROM " . $wpdb->posts . " WHERE post_status = 'publish' AND " . $post_type_string . " AND post_modified_gmt < '" . current_time('mysql', 1) . "' ORDER BY post_modified_gmt";
+    	
+    	$create_date = $wpdb->get_results($sql_create_date);
+    	$update_date = $wpdb->get_results($sql_update_date);
+    	
+    	$j=0;
+    	$i=0;
+    	$recentposts=array();
+    	while ($i<count($update_date)) {
+    		$k=0;
+    		foreach($create_date as $create_date_single) {
+				if(($update_date[$i]->ID == $create_date_single->ID) && ( $i<$k ) && ( $j<$amount )) { $recentposts[$j]=$update_date[$i]; $j++;} 
+				$k++;   		
+    		}
+    		$i++;
+    	}
+    	
+    	     
       if ($recentposts) {
       	/* Before widget (defined by themes). */
         	echo $before_widget;
@@ -86,11 +102,11 @@ class mw_lastupdated extends WP_Widget {
        	if ( $title )
          	echo $before_title . $title . $after_title;
 
-			echo '<ul>';                          
-                                    
+			echo '<ul>';
+			                                               
        	if($date_bool) {                       	
          	foreach($recentposts as $recentpost) {
-            	echo '<li><a href="'.get_permalink($recentpost->ID).'">'.$recentpost->post_title.'</a> ('.date(get_option('date_format'),strtotime($recentpost->post_modified)).') </li>';
+            	echo '<li>'.$recentpost->ord.'<a href="'.get_permalink($recentpost->ID).'">'.$recentpost->post_title.'</a> ('.date(get_option('date_format'),strtotime($recentpost->post_modified)).') </li>';
          	}                          
        	}
         	else {
@@ -131,7 +147,6 @@ class mw_lastupdated extends WP_Widget {
 	/* Set up some default widget settings. */
 	$defaults = array( 'title' => __('last updated','lastupdated'), 'amount' => 5, 'post_type' => 'posts', 'date' => true );
 	$instance = wp_parse_args( (array) $instance, $defaults ); ?>
-
 	<p>
    	<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('title:','lastupdated'); ?></label>
     	<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>"  class="widefat" >
@@ -143,9 +158,9 @@ class mw_lastupdated extends WP_Widget {
 	<p>
 		<label for="<?php echo $this->get_field_id( 'post_type' ); ?>"><?php _e('post-type:','lastupdated'); ?></label> 
 		<select id="<?php echo $this->get_field_id( 'post_type' ); ?>" name="<?php echo $this->get_field_name( 'post_type' ); ?>" class="widefat">
-			<option <?php if ( 'posts' == $instance['post_type'] ) echo 'selected="selected"'; ?>><?php _e('posts','lastupdated'); ?></option>
-			<option <?php if ( 'pages' == $instance['post_type'] ) echo 'selected="selected"'; ?>><?php _e('pages','lastupdated'); ?></option>
-			<option <?php if ( 'both' == $instance['post_type'] ) echo 'selected="selected"'; ?>><?php _e('both','lastupdated'); ?></option>
+			<option <?php if ( 'posts' == $instance['post_type'] ) echo 'selected="selected"'; ?> value="posts"><?php _e('posts','lastupdated'); ?></option>
+			<option <?php if ( 'pages' == $instance['post_type'] ) echo 'selected="selected"'; ?> value="pages"><?php _e('pages','lastupdated'); ?></option>
+			<option <?php if ( 'both' == $instance['post_type'] ) echo 'selected="selected"'; ?> value="both"><?php _e('both','lastupdated'); ?></option>
 		</select>
 	</p>
 	<p>
