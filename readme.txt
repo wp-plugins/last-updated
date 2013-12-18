@@ -3,7 +3,7 @@ Contributors: wudi96
 Tags: widget
 Requires at least: 3.0.1
 Tested up to: 3.8
-Stable tag: 1.5
+Stable tag: 1.5.1
 License: CC-BY-SA 3.0
 License URI: http://creativecommons.org/licenses/by-sa/3.0
 
@@ -56,8 +56,11 @@ General->Date Format.
 
 == Changelog ==
 
+= 1.5.1 =
+Bugfix: changed ASC to DESC
+
 = 1.5 =
-Bugfixe: Problem when saving posttype as German user.
+Bugfix: Problem when saving posttype as German user.
 New algorithm: Excludes Posts, when they are higher located in a 
 table ordered by creation time than in a table ordered by updating time. -> Just 
 displays posts that are really old and updated.

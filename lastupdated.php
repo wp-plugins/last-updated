@@ -3,7 +3,7 @@
  * Plugin Name: last updated
  * Plugin URI: http://www.martin.wudenka.de/wordpress-widget-zuletzt-aktualisierte-posts-anzeigen/
  * Description: Shows posts and pages last updated.
- * Version: 1.5
+ * Version: 1.5.1
  * Author: Martin Wudenka
  * Author URI: http://www.martin.wudenka.de
  */
@@ -75,8 +75,8 @@ class mw_lastupdated extends WP_Widget {
      		default: $post_type_string="(post_type = 'post' OR post_type = 'page')";
      	}
      	
-    	$sql_create_date = "SELECT ID,post_title,post_modified FROM " . $wpdb->posts . " WHERE post_status = 'publish' AND " . $post_type_string . " AND post_modified_gmt < '" . current_time('mysql', 1) . "' ORDER BY post_date_gmt";
-    	$sql_update_date = "SELECT ID,post_title,post_modified FROM " . $wpdb->posts . " WHERE post_status = 'publish' AND " . $post_type_string . " AND post_modified_gmt < '" . current_time('mysql', 1) . "' ORDER BY post_modified_gmt";
+    	$sql_create_date = "SELECT ID,post_title,post_modified FROM " . $wpdb->posts . " WHERE post_status = 'publish' AND " . $post_type_string . " AND post_modified_gmt < '" . current_time('mysql', 1) . "' ORDER BY post_date_gmt DESC";
+    	$sql_update_date = "SELECT ID,post_title,post_modified FROM " . $wpdb->posts . " WHERE post_status = 'publish' AND " . $post_type_string . " AND post_modified_gmt < '" . current_time('mysql', 1) . "' ORDER BY post_modified_gmt DESC";
     	
     	$create_date = $wpdb->get_results($sql_create_date);
     	$update_date = $wpdb->get_results($sql_update_date);
