@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: last updated v1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-13 12:51+0100\n"
-"PO-Revision-Date: 2013-10-13 13:28+0100\n"
+"POT-Creation-Date: 2014-01-14 18:26+0100\n"
+"PO-Revision-Date: 2014-01-14 18:27+0100\n"
 "Last-Translator: martinwudenka <Martin.Wudenka@gmx.de>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -19,42 +19,39 @@ msgstr ""
 "X-Textdomain-Support: yes\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: lastupdated.php:49
+#: lastupdated.php:47
 msgid "Shows posts and pages last updated."
 msgstr "Zeigt zuletzt aktualisierte Artikel und Seiten an."
 
 # @ lastupdated
-#: lastupdated.php:55 lastupdated.php:129
+#: lastupdated.php:53 lastupdated.php:163
 msgid "last updated"
 msgstr "zuletzt aktualisiert"
 
 # @ lastupdated
-#: lastupdated.php:133
+#: lastupdated.php:166
 msgid "title:"
 msgstr "Titel:"
 
 # @ lastupdated
-#: lastupdated.php:137
+#: lastupdated.php:170
 msgid "amount (if empty, amount will be 5):"
 msgstr "Anzahl (wenn leer, werden 5 angezeigt)"
 
-#: lastupdated.php:141
-msgid "post-type:"
-msgstr "Art:"
-
-#: lastupdated.php:143
-msgid "posts"
-msgstr "Beiträge"
-
-#: lastupdated.php:144
-msgid "pages"
-msgstr "Seiten"
-
-#: lastupdated.php:145
-msgid "both"
-msgstr "beides"
+#: lastupdated.php:174
+msgid "post-types:"
+msgstr "Veröffentlichungsart:"
 
 # @ lastupdated
-#: lastupdated.php:150
+#: lastupdated.php:184
 msgid "Should the date be showen?"
 msgstr "Soll das Datum mit angezeigt werden?"
+
+#~ msgid "posts"
+#~ msgstr "Beiträge"
+
+#~ msgid "pages"
+#~ msgstr "Seiten"
+
+#~ msgid "both"
+#~ msgstr "beides"
