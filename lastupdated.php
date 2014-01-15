@@ -3,14 +3,13 @@
  * Plugin Name: last updated
  * Plugin URI: http://www.martin.wudenka.de/wordpress-widget-zuletzt-aktualisierte-posts-anzeigen/
  * Description: Shows posts and pages last updated.
- * Version: 1.5.1
+ * Version: 1.6
  * Author: Martin Wudenka
  * Author URI: http://www.martin.wudenka.de
  */
  
 /*
- * sources: 
- * http://www.galuba.net/programmierung/wordpress/tipps-tricks/wordpress-zuletzt-aktualisierte-artikel-seiten-anzeigen.html
+ * sources:
  * http://justintadlock.com/archives/2009/05/26/the-complete-guide-to-creating-widgets-in-wordpress-28
  */
  
@@ -64,16 +63,27 @@ class mw_lastupdated extends WP_Widget {
      	$title = apply_filters('widget_title', $instance['title'] );
      	$amount = apply_filters('widget_amount', $instance['amount'] );
     	$date_bool = $instance['date'];
-    	$post_type = $instance['post_type'];
      	if (empty($amount))
      		$amount = 5;
      		
-     	switch($post_type) {
+     	/*switch($post_type) {
      		case 'posts': $post_type_string="post_type = 'post'";	break;
      		case 'pages': $post_type_string="post_type = 'page'";	break;
      		case 'both': $post_type_string="(post_type = 'post' OR post_type = 'page')";	break;
      		default: $post_type_string="(post_type = 'post' OR post_type = 'page')";
      	}
+     	*/
+     	$post_types = get_post_types( '', 'names' ); 
+		$i=1;
+		$post_type_string='( ';
+		foreach ( $post_types as $post_type ) {
+			if($instance['post-type-'.$post_type]) {
+				if($i>1) $post_type_string.= 'OR ';
+  				$post_type_string.='post_type = "' . $post_type . '" ';
+  				$i++;
+  			}
+		}
+		$post_type_string.=' )';
      	
     	$sql_create_date = "SELECT ID,post_title,post_modified FROM " . $wpdb->posts . " WHERE post_status = 'publish' AND " . $post_type_string . " AND post_modified_gmt < '" . current_time('mysql', 1) . "' ORDER BY post_date_gmt DESC";
     	$sql_update_date = "SELECT ID,post_title,post_modified FROM " . $wpdb->posts . " WHERE post_status = 'publish' AND " . $post_type_string . " AND post_modified_gmt < '" . current_time('mysql', 1) . "' ORDER BY post_modified_gmt DESC";
@@ -132,7 +142,11 @@ class mw_lastupdated extends WP_Widget {
     	$instance['title'] = strip_tags( $new_instance['title'] );
     	$instance['amount'] = strip_tags( $new_instance['amount'] );
     	$instance['date'] = (bool) $new_instance['date'];
-    	$instance['post_type'] = $new_instance['post_type'];
+    	
+    	$post_types = get_post_types( '', 'names' ); 
+		foreach ( $post_types as $post_type ) {
+			$instance['post-type-'.$post_type] = (bool) $new_instance['post-type-'.$post_type];
+		}
 
    	return $instance;
 	}
@@ -143,9 +157,10 @@ class mw_lastupdated extends WP_Widget {
 	 * when creating your form elements. This handles the confusing stuff.
 	 */
 	function form( $instance ) {
+	global $wp_post_types;
 
 	/* Set up some default widget settings. */
-	$defaults = array( 'title' => __('last updated','lastupdated'), 'amount' => 5, 'post_type' => 'posts', 'date' => true );
+	$defaults = array( 'title' => __('last updated','lastupdated'), 'amount' => 5, 'date' => true );
 	$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 	<p>
    	<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('title:','lastupdated'); ?></label>
@@ -156,12 +171,12 @@ class mw_lastupdated extends WP_Widget {
  		<input type="text" id="<?php echo $this->get_field_id( 'amount' ); ?>" name="<?php echo $this->get_field_name( 'amount' ); ?>" value="<?php echo $instance['amount']; ?>"  class="widefat" >
 	</p>
 	<p>
-		<label for="<?php echo $this->get_field_id( 'post_type' ); ?>"><?php _e('post-type:','lastupdated'); ?></label> 
-		<select id="<?php echo $this->get_field_id( 'post_type' ); ?>" name="<?php echo $this->get_field_name( 'post_type' ); ?>" class="widefat">
-			<option <?php if ( 'posts' == $instance['post_type'] ) echo 'selected="selected"'; ?> value="posts"><?php _e('posts','lastupdated'); ?></option>
-			<option <?php if ( 'pages' == $instance['post_type'] ) echo 'selected="selected"'; ?> value="pages"><?php _e('pages','lastupdated'); ?></option>
-			<option <?php if ( 'both' == $instance['post_type'] ) echo 'selected="selected"'; ?> value="both"><?php _e('both','lastupdated'); ?></option>
-		</select>
+		<label><?php _e('post-types:','lastupdated'); ?></label><br>	
+		<?php $post_types = get_post_types( '', 'names' ); ?>
+		<?php foreach ( $post_types as $post_type ) { ?>
+			<input class="checkbox" type="checkbox" <?php checked( $instance['post-type-'.$post_type], true ); ?> id="<?php echo $this->get_field_id( 'post-type-'.$post_type ); ?>" name="<?php echo $this->get_field_name( 'post-type-'.$post_type ); ?>" /> 
+   		<label for="<?php echo $this->get_field_id( 'post-type-'.$post_type ); ?>"><?php echo $wp_post_types[$post_type]->labels->name; ?></label><br>
+		<?php } ?>
 	</p>
 	<p>
 		<input class="checkbox" id="<?php echo $this->get_field_id('date'); ?>" name="<?php echo $this->get_field_name('date'); ?>" type="checkbox" <?php checked(isset($instance['date']) ? $instance['date'] : 0); ?> > 
