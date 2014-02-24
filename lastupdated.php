@@ -3,7 +3,7 @@
  * Plugin Name: last updated
  * Plugin URI: http://www.martin.wudenka.de/wordpress-widget-zuletzt-aktualisierte-posts-anzeigen/
  * Description: Shows posts and pages last updated.
- * Version: 1.6
+ * Version: 1.6.1
  * Author: Martin Wudenka
  * Author URI: http://www.martin.wudenka.de
  */
@@ -65,14 +65,8 @@ class mw_lastupdated extends WP_Widget {
     	$date_bool = $instance['date'];
      	if (empty($amount))
      		$amount = 5;
-     		
-     	/*switch($post_type) {
-     		case 'posts': $post_type_string="post_type = 'post'";	break;
-     		case 'pages': $post_type_string="post_type = 'page'";	break;
-     		case 'both': $post_type_string="(post_type = 'post' OR post_type = 'page')";	break;
-     		default: $post_type_string="(post_type = 'post' OR post_type = 'page')";
-     	}
-     	*/
+
+		/* catch all possible post-type-names, look which are wanted and create a string for the sql-query */
      	$post_types = get_post_types( '', 'names' ); 
 		$i=1;
 		$post_type_string='( ';
@@ -85,12 +79,13 @@ class mw_lastupdated extends WP_Widget {
 		}
 		$post_type_string.=' )';
      	
-    	$sql_create_date = "SELECT ID,post_title,post_modified FROM " . $wpdb->posts . " WHERE post_status = 'publish' AND " . $post_type_string . " AND post_modified_gmt < '" . current_time('mysql', 1) . "' ORDER BY post_date_gmt DESC";
-    	$sql_update_date = "SELECT ID,post_title,post_modified FROM " . $wpdb->posts . " WHERE post_status = 'publish' AND " . $post_type_string . " AND post_modified_gmt < '" . current_time('mysql', 1) . "' ORDER BY post_modified_gmt DESC";
+    	$sql_create_date = "SELECT ID,post_title FROM " . $wpdb->posts . " WHERE post_status = 'publish' AND " . $post_type_string . " AND post_modified_gmt < '" . current_time('mysql', 1) . "' ORDER BY post_date_gmt DESC";
+    	$sql_update_date = "SELECT ID,post_title FROM " . $wpdb->posts . " WHERE post_status = 'publish' AND " . $post_type_string . " AND post_modified_gmt < '" . current_time('mysql', 1) . "' ORDER BY post_modified_gmt DESC";
     	
     	$create_date = $wpdb->get_results($sql_create_date);
     	$update_date = $wpdb->get_results($sql_update_date);
     	
+    	/* only posts that are higher located in sql_update_date than in sql_create_date */
     	$j=0;
     	$i=0;
     	$recentposts=array();
@@ -116,7 +111,7 @@ class mw_lastupdated extends WP_Widget {
 			                                               
        	if($date_bool) {                       	
          	foreach($recentposts as $recentpost) {
-            	echo '<li>'.$recentpost->ord.'<a href="'.get_permalink($recentpost->ID).'">'.$recentpost->post_title.'</a> ('.date(get_option('date_format'),strtotime($recentpost->post_modified)).') </li>';
+            	echo '<li>'.$recentpost->ord.'<a href="'.get_permalink($recentpost->ID).'">'.$recentpost->post_title.'</a> (' . get_post_modified_time( get_option('date_format'), false, $recentpost->ID, true ) . ') </li>';
          	}                          
        	}
         	else {
