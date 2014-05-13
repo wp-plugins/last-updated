@@ -2,7 +2,7 @@
 Contributors: wudi96
 Tags: widget, last-updated, sidebar, simple, custom post type
 Requires at least: 3.0.1
-Tested up to: 3.8
+Tested up to: 3.9
 Stable tag: 1.6.1
 License: CC-BY-SA 3.0
 License URI: http://creativecommons.org/licenses/by-sa/3.0
@@ -19,7 +19,7 @@ This plugin provides a widget that shows last updated posts or pages or other cu
 Settings:
 You can set your own title.
 You can change the number of displayed posts or pages. Standard is 5.
-You can choose your post-type (also custom post types are supported).
+You can choose between posts, pages or both.
 Optional it can display the date when the post or pages was updated.
 
 DE:
@@ -28,7 +28,7 @@ Dieses Plugin stellt ein Widget zur Verfügung, das zuletzt aktualisierte Beitr�
 
 Einstellungen:
 Man kann einen Titel, die Anzahl der aufgelisteten Seiten oder Beiträge festlegen und hat die Möglichkeit optional ein Datum anzuzeigen.
-Außerdem kann man zwischen den verschiedenen post-types wählen, wobei auch custom post types unterstützt werden.
+Außerdem kann man zwischen Beiträgen, Seiten oder beides wählen.
 
 Sehen Sie auch hier vorbei: http://www.martin.wudenka.de/wordpress-widget-zuletzt-aktualisierte-posts-anzeigen
 

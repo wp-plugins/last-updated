@@ -159,11 +159,11 @@ class mw_lastupdated extends WP_Widget {
 	$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 	<p>
    	<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('title:','lastupdated'); ?></label>
-    	<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>"  class="widefat" >
+    	<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>"  class="widefat" />
    </p>
 	<p>
     	<label for="<?php echo $this->get_field_id( 'amount' ); ?>"><?php _e('amount (if empty, amount will be 5):','lastupdated'); ?></label>
- 		<input type="text" id="<?php echo $this->get_field_id( 'amount' ); ?>" name="<?php echo $this->get_field_name( 'amount' ); ?>" value="<?php echo $instance['amount']; ?>"  class="widefat" >
+ 		<input type="text" id="<?php echo $this->get_field_id( 'amount' ); ?>" name="<?php echo $this->get_field_name( 'amount' ); ?>" value="<?php echo $instance['amount']; ?>"  class="widefat" />
 	</p>
 	<p>
 		<label><?php _e('post-types:','lastupdated'); ?></label><br>	
