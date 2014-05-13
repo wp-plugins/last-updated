@@ -2,7 +2,7 @@
 Contributors: wudi96
 Tags: widget, last-updated, sidebar, simple, custom post type
 Requires at least: 3.0.1
-Tested up to: 3.8
+Tested up to: 3.9
 Stable tag: 1.6.1
 License: CC-BY-SA 3.0
 License URI: http://creativecommons.org/licenses/by-sa/3.0
