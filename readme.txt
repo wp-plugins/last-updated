@@ -1,5 +1,5 @@
 === last updated ===
-Contributors: hobbeshunter
+Contributors: wudi96
 Tags: widget, last-updated, sidebar, simple, custom post type
 Requires at least: 3.8
 Tested up to: 4.2.4
