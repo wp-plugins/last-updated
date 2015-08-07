@@ -1,34 +1,35 @@
 === last updated ===
-Contributors: wudi96
+Contributors: hobbeshunter
 Tags: widget, last-updated, sidebar, simple, custom post type
-Requires at least: 3.0.1
-Tested up to: 3.9
-Stable tag: 1.6.1
+Requires at least: 3.8
+Tested up to: 4.2.4
+Stable tag: 2
 License: CC-BY-SA 3.0
 License URI: http://creativecommons.org/licenses/by-sa/3.0
 
-Provides a widget that shows last updated posts (also custom post types are supported) in a list.
-Optionally you can display also the date.
+Mark posts as significantly updated an display them in a widget.
 
 == Description ==
 
 EN:
 
-This plugin provides a widget that shows last updated posts or pages or other custom post-types.
+Provides a widget that displays posts (all post-types supported, custom as well) marked as significantly updated with the date of the update (optionally).
 
 Settings:
-You can set your own title.
-You can change the number of displayed posts or pages. Standard is 5.
-You can choose between posts, pages or both.
-Optional it can display the date when the post or pages was updated.
+* Widget Title
+* Amount
+* Post-Types
+* Whether the date of the update should be displayed or not.
 
 DE:
 
-Dieses Plugin stellt ein Widget zur Verfügung, das zuletzt aktualisierte Beiträge und Seiten anzeigt.
+Dieses Plugin stellt ein Widget zur Verfügung, das zuletzt aktualisierte Beiträge (alle Veröffentlichungsarten werden unterstützt, auch custom post-types) mit dem dazugehörigen Datumm der Aktualisierung (optional) anzeigt.
 
 Einstellungen:
-Man kann einen Titel, die Anzahl der aufgelisteten Seiten oder Beiträge festlegen und hat die Möglichkeit optional ein Datum anzuzeigen.
-Außerdem kann man zwischen Beiträgen, Seiten oder beides wählen.
+* Widget Titel
+* Anzahl
+* Veröffentlichungsarten
+* Ob das Datum der Veröffentlichung angezeigt werden soll oder nicht.
 
 Sehen Sie auch hier vorbei: http://www.martin.wudenka.de/wordpress-widget-zuletzt-aktualisierte-posts-anzeigen
 
@@ -44,7 +45,7 @@ DE:
 
 1. Lade den Ordner 'lastupdated'  in '/wp-content/plugins/' hoch.
 2. Aktiviere das Plugin im 'Plugin' Menü von WordPRess.
-3. Ziehe das Widget im 'Widget' Menü in eine Sidebar. 
+3. Ziehe das Widget im 'Widget' Menü in eine Sidebar.
 
 == Frequently Asked Questions ==
 
@@ -55,9 +56,14 @@ General->Date Format.
 
 == Screenshots ==
 
-1. The last updated widget
+1. Widget Settings
+2. Controls for the editor which toggle automatically after 20 changes.
+3. The Widget itself.
 
 == Changelog ==
+
+= 2.0 =
+Major Release. Completely new algorithm. Starts working after you updated a few posts.
 
 = 1.6.1 =
 Bugfix: date translation
@@ -69,9 +75,9 @@ Added support for all post-types.
 Bugfix: changed ASC to DESC
 
 = 1.5 =
-Bugfix: Problem when saving posttype as German user.
-New algorithm: Excludes Posts, when they are higher located in a 
-table ordered by creation time than in a table ordered by updating time. -> Just 
+Bugfix: Problem when saving post-type as German user.
+New algorithm: Excludes Posts, when they are higher located in a
+table ordered by creation time than in a table ordered by updating time. -> Just
 displays posts that are really old and updated.
 
 = 1.4.2 =
@@ -81,9 +87,12 @@ Some Design fixes
 Choose now between 'posts', 'pages' or 'both'.
 
 = 1.3 =
-Internationalisation
+Internationalization
 
 == Upgrade Notice ==
 
+= 2.0 =
+You have to update a few posts and mark until it starts working.
+
 = 1.6 =
-you have to reset your post-type selection.
+You have to reset your post-type selection.
